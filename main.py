@@ -1,3 +1,29 @@
+import base64
+
+import streamlit as st
+
+
+def autoplay_audio(file_path: str):
+    with open(file_path, "rb") as f:
+        data = f.read()
+        b64 = base64.b64encode(data).decode()
+        md = f"""
+            <audio controls autoplay="true">
+            <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+            </audio>
+            """
+        st.markdown(
+            md,
+            unsafe_allow_html=True,
+        )
+
+
+st.write("# Auto-playing Audio!")
+
+autoplay_audio("audio_okay.mp3")
+
+"""
+
 from fastapi import FastAPI, UploadFile
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -135,7 +161,7 @@ def text_to_speech(text):
             print('something went wrong')
     except Exception as e:
         print(e)
-
+"""
 
 #1. Send in audio, and have it transcribed
 #2. We want to send it to chatgpt and get a response
